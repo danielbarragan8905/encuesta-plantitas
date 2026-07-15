@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta · Noctámbulos</title>
+<style>
+  :root{
+    --tinta: #14161f;
+    --tinta-2: #1e212d;
+    --luna: #e7e3d8;
+    --violeta: #8a7ff0;
+    --ambar: #f0a942;
+    --tenue: rgba(231,227,216,0.6);
+    --linea: rgba(231,227,216,0.13);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--tinta);
+    color: var(--luna);
+    font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  }
+
+  .marco{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px 90px;
+  }
+
+  .cielo{
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, var(--violeta), var(--ambar));
+  }
+
+  header{ padding: 60px 0 30px; }
+
+  .eyebrow{
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ambar);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  h1#title{
+    font-size: clamp(2rem, 5.5vw, 3.2rem);
+    line-height: 1.06;
+    margin: 0 0 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  h1#title span{ color: var(--violeta); }
+
+  p#description{
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--tenue);
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  form#survey-form{ margin-top: 44px; }
+
+  .franja{
+    border-top: 1px solid var(--linea);
+    padding: 30px 0;
+  }
+
+  .franja:first-child{ border-top: none; padding-top: 6px; }
+
+  .franja-num{
+    display:block;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violeta);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  label{
+    display:block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 9px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  select,
+  textarea{
+    width: 100%;
+    background: var(--tinta-2);
+    border: 1px solid var(--linea);
+    border-radius: 8px;
+    color: var(--luna);
+    padding: 13px 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder{ color: rgba(231,227,216,0.35); }
+
+  input:focus, select:focus, textarea:focus, button:focus{
+    outline: none;
+    border-color: var(--violeta);
+    box-shadow: 0 0 0 3px rgba(138,127,240,0.25);
+  }
+
+  select#dropdown{
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%23e7e3d8' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  select#dropdown option{ background: var(--tinta-2); }
+
+  .fila{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  @media (max-width: 540px){ .fila{ grid-template-columns: 1fr; } }
+
+  fieldset{ border:none; margin:0; padding:0; }
+
+  fieldset legend{
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding: 0;
+  }
+
+  .opciones{ display:flex; flex-direction:column; gap: 9px; }
+
+  .opcion{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    background: var(--tinta-2);
+    border: 1px solid var(--linea);
+    border-radius: 8px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 0.94rem;
+  }
+
+  .opcion:hover{ border-color: rgba(138,127,240,0.5); }
+
+  .opcion input[type="radio"],
+  .opcion input[type="checkbox"]{
+    accent-color: var(--violeta);
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  textarea{ min-height: 92px; resize: vertical; }
+
+  .ayuda{
+    display:block;
+    font-weight: 400;
+    font-size: 0.82rem;
+    color: var(--tenue);
+    margin-top: 4px;
+  }
+
+  button#submit{
+    width: 100%;
+    margin-top: 10px;
+    padding: 17px;
+    background: var(--violeta);
+    color: var(--tinta);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s ease, transform .12s ease;
+  }
+
+  button#submit:hover{ background: #a79cf5; }
+  button#submit:active{ transform: scale(0.99); }
+
+  .pie{
+    text-align:center;
+    margin-top: 24px;
+    font-size: 0.8rem;
+    color: var(--tenue);
+  }
+</style>
+</head>
+<body>
+
+<div class="cielo" aria-hidden="true"></div>
+
+<div class="marco">
+
+  <header>
+    <div class="eyebrow">Encuesta express · 3 min</div>
+    <h1 id="title">¿A qué hora despierta tu <span>mente creativa</span>?</h1>
+    <p id="description">
+      Buscamos entender los hábitos de quienes rinden más de noche: cuándo trabajan mejor,
+      qué los mantiene despiertos y qué tanto les cuesta la mañana siguiente. Con tus
+      respuestas armamos una guía real para noctámbulos, no otro consejo genérico de dormir temprano.
+    </p>
+  </header>
+
+  <form id="survey-form">
+
+    <div class="franja">
+      <span class="franja-num">Parte 01 · Sobre ti</span>
+
+      <div class="fila">
+        <div>
+          <label id="name-label" for="name">Nombre
+            <input type="text" id="name" name="name" placeholder="¿Cómo te decimos?" required>
+          </label>
+        </div>
+        <div>
+          <label id="email-label" for="email">Correo
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <label id="number-label" for="number">¿A qué hora te acuestas normalmente? (formato 24h)
+          <input type="number" id="number" name="number" placeholder="Ej: 1 (para la 1 a.m.)" min="0" max="23">
+          <span class="ayuda">Escribe la hora en formato de 0 a 23.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="franja">
+      <span class="franja-num">Parte 02 · Tus horarios</span>
+
+      <label for="dropdown">¿En qué momento del día rindes más?</label>
+      <select id="dropdown" name="momento" required>
+        <option value="" disabled selected>Elige un momento</option>
+        <option value="madrugada">Después de medianoche</option>
+        <option value="noche">En la noche, tras la cena</option>
+        <option value="tarde">En la tarde</option>
+        <option value="manana">En la mañana</option>
+      </select>
+
+      <div style="margin-top:26px;">
+        <fieldset id="radio-buttons">
+          <legend>¿Qué tanto te cuesta la mañana siguiente?</legend>
+          <div class="opciones">
+            <label class="opcion">
+              <input type="radio" name="mañana-siguiente" value="mucho">
+              Muchísimo, funciono a medias
+            </label>
+            <label class="opcion">
+              <input type="radio" name="mañana-siguiente" value="algo">
+              Un poco, pero se me pasa rápido
+            </label>
+            <label class="opcion">
+              <input type="radio" name="mañana-siguiente" value="nada">
+              Nada, me adapto sin problema
+            </label>
+            <label class="opcion">
+              <input type="radio" name="mañana-siguiente" value="depende">
+              Depende del día
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="franja">
+      <span class="franja-num">Parte 03 · Qué te mantiene despierto</span>
+
+      <fieldset id="checkboxes">
+        <legend>¿Qué suele mantenerte despierto hasta tarde? (marca todas las que apliquen)</legend>
+        <div class="opciones">
+          <label class="opcion">
+            <input type="checkbox" name="motivo-desvelo" value="trabajo">
+            Trabajo o estudio pendiente
+          </label>
+          <label class="opcion">
+            <input type="checkbox" name="motivo-desvelo" value="pantallas">
+            Pantallas, redes sociales o series
+          </label>
+          <label class="opcion">
+            <input type="checkbox" name="motivo-desvelo" value="pensamientos">
+            Pensamientos que no se apagan
+          </label>
+          <label class="opcion">
+            <input type="checkbox" name="motivo-desvelo" value="creatividad">
+            Ideas o proyectos creativos
+          </label>
+          <label class="opcion">
+            <input type="checkbox" name="motivo-desvelo" value="cafeina">
+            Cafeína tomada muy tarde
+          </label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="franja">
+      <span class="franja-num">Parte 04 · Lo demás</span>
+
+      <label for="comments">¿Algo más que quieras contarnos?</label>
+      <textarea id="comments" name="comments" placeholder="Tu rutina rara, un truco que te funciona, lo que sea"></textarea>
+    </div>
+
+    <button id="submit" type="submit">Enviar respuestas</button>
+    <p class="pie">No compartimos tus datos con terceros. Solo se usan para la guía de la comunidad.</p>
+
+  </form>
+
+</div>
+
+<script>
+  document.getElementById('survey-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = document.getElementById('submit');
+    const original = btn.textContent;
+    btn.textContent = '¡Gracias por compartir!';
+    btn.style.background = '#f0a942';
+    const form = this;
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      form.reset();
+    }, 2200);
+  });
+</script>
+
+</body>
+</html>
